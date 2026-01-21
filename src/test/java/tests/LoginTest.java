@@ -16,9 +16,18 @@ public class LoginTest {
     ConfigReader config;
 
     @BeforeMethod
+
     public void setup() {
+        // 1. Redirigimos los logs de rojo a blanco/gris inmediatamente
+        System.setProperty("org.slf4j.simpleLogger.logFile", "System.out");
+        // 2. Silenciar alertas de Selenium
+        System.setProperty("webdriver.chrome.silentOutput", "true");
+        java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(java.util.logging.Level.OFF);
+        java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(java.util.logging.Level.OFF);
+        // 3. Inicialización de componentes
         config = new ConfigReader();
         WebDriverManager.chromedriver().setup();
+
         driver = new ChromeDriver();
         driver.get(config.getProperty("url"));
         loginPage = new LoginPage(driver);
